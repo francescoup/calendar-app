@@ -1,0 +1,29 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.red {
+  background: rgb(244 63 94);
+  color: white;
+}
+.blue {
+  background: rgb(3 105 161);
+  color: white;
+}
+.yellow {
+  background: rgb(250 204 21);
+  color: black;
+}
+.amber {
+  background: rgb(251 191 36);
+  color: black;
+}
+.cyan {
+  background: rgb(8 145 178);
+  color: black;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
