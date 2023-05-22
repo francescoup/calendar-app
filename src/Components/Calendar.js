@@ -1,42 +1,34 @@
-import React, { useState } from "react";
-import { dayName, days } from "../Data/TimeSlot";
+import React from "react";
+import { dayName } from "../Data/TimeSlot";
 import { AnimatePresence, motion } from "framer-motion";
+import { useSwipeable } from "react-swipeable";
 import {
   format,
   startOfToday,
-  eachDayOfInterval,
-  startOfMonth,
-  endOfMonth,
-  endOfWeek,
   isSameMonth,
   getDay,
   isSunday,
   isSameDay,
   parseISO,
 } from "date-fns";
-import ModalLayout from "./ModalLayout";
+
 import { useGlobalContext } from "../Context";
-// let today = startOfToday()
-// export let newDays = eachDayOfInterval({start: startOfMonth(today), end:endOfMonth(today)})
 
 const Calendar = () => {
   const {
-    newDays,
     dayCurrentMonths,
     days,
-    weekInterval,
     dayCurrentWeek,
     el,
-    dayFormat,
     meeting,
     isDetailsOpen,
     setIsDetailsOpen,
     index,
-    removeEvents,
-    event,
     setEvent,
+    nextMonths,
+    prevMonths,
   } = useGlobalContext();
-  let today = startOfToday();
+
   let colstart = [
     "",
     "col-start-1",
@@ -46,13 +38,18 @@ const Calendar = () => {
     "col-start-5",
     "col-start-6",
   ];
-  // let newDays = eachDayOfInterval({start: startOfMonth(today), end:endOfWeek(endOfMonth(today))})
+
   function passData(data) {
     setEvent(data);
     setIsDetailsOpen(!isDetailsOpen);
   }
+
+  const handlers = useSwipeable({
+    onSwipedRight: () => nextMonths(),
+    onSwipedLeft: () => prevMonths(),
+  });
   return (
-    <div className="container overflow-hidden">
+    <div {...handlers} className="container overflow-hidden">
       <AnimatePresence mode="wait" initial={false}>
         <motion.div
           key={`calendar-${index}`}

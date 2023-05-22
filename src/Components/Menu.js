@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import Button from "../Atoms/Button";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { add, format, parse, startOfToday, sub } from "date-fns";
+
 import { useGlobalContext } from "../Context";
 import { calendarswitch } from "../Data/TimeSlot";
 import { motion, AnimatePresence } from "framer-motion";
@@ -10,16 +10,9 @@ const Menu = () => {
   const {
     nextMonths,
     prevMonths,
-    dayCurrentMonths,
-    weekInterval,
-    setDays,
-    newDays,
-    weeks,
-    months,
-    day,
-    el,
+
     dayFormat,
-    openModal,
+
     switchView,
   } = useGlobalContext();
 
@@ -50,7 +43,7 @@ const Menu = () => {
           key={dayFormat}
           initial={{ opacity: 0, y: "-10px" }}
           animate={{ opacity: 1, y: "0" }}
-          exit={{ opacity: 0, y: "-10px" }}
+          exit={{ opacity: 0, y: "10px" }}
           className="mx-8 relative mb-1"
         >
           <h2 className="text-xl text-red-500">{dayFormat}</h2>

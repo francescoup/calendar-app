@@ -4,8 +4,7 @@ import { colors } from "../Data/TimeSlot";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Modal = () => {
-  const eventId = useId();
-  const { isOpen, meeting, setMeeting, saveToLocalStorage, isDetailsOpen } =
+  const { isOpen, meeting, setMeeting, saveToLocalStorage } =
     useGlobalContext();
 
   const [input, setInput] = useState({

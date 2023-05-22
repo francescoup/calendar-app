@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import React from "react";
 
 const Button = ({ text, className, onclick, icon }) => {
   return (

@@ -4,17 +4,9 @@ import { useGlobalContext } from "../Context";
 import EditEvent from "./EditEvent";
 
 const ModalLayout = () => {
-  const {
-    removeEvents,
-    isEdit,
-    edit,
-    setIsEdit,
-    meeting,
-    event,
-    isDetailsOpen,
-    setIsDetailsOpen,
-  } = useGlobalContext();
-  console.log(isDetailsOpen);
+  const { removeEvents, isEdit, edit, setIsEdit, event, isDetailsOpen } =
+    useGlobalContext();
+
   return (
     <AnimatePresence>
       {isDetailsOpen && (

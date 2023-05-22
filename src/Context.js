@@ -11,17 +11,9 @@ import {
   parse,
   startOfToday,
   startOfWeek,
-  sub,
   eachDayOfInterval,
-  startOfMonth,
   endOfWeek,
   endOfMonth,
-  addDays,
-  nextDay,
-  getDate,
-  isSameDay,
-  parseISO,
-  set,
 } from "date-fns";
 const AppContext = createContext();
 const AppProvider = ({ children }) => {
@@ -45,7 +37,9 @@ const AppProvider = ({ children }) => {
   let daysInterval = dayCurrent;
   let newDays = eachDayOfInterval({
     start: startOfWeek(dayCurrentMonths, { weekStartsOn: 1 }),
-    end: endOfWeek(endOfMonth(dayCurrentMonths), { weekStartsOn: 1 }),
+    end: add(endOfWeek(endOfMonth(dayCurrentMonths), { weekStartsOn: 1 }), {
+      weeks: 1,
+    }),
   });
 
   let weekInterval = eachDayOfInterval({
@@ -117,27 +111,16 @@ const AppProvider = ({ children }) => {
     }
   }, [el, nextMonths, prevMonths]);
 
-  function weeks() {
-    setEl("Settimane");
-  }
-  function months() {
-    setEl("Mesi");
-  }
-
-  function day() {
-    setEl("Giorni");
-  }
   function switchView(key) {
     switch (key) {
       case "Day":
         return setEl("Giorni");
-        break;
+
       case "Week":
         return setEl("Settimane");
-        break;
+
       case "Month":
         return setEl("Mesi");
-        break;
 
       default:
         break;
@@ -146,9 +129,7 @@ const AppProvider = ({ children }) => {
   function openModal() {
     setIsOpen(!isOpen);
   }
-  // let singleMeeting = meeting.flatMap((single) => {
-  //   return single.time;
-  // });
+
   function edit() {
     setIsEdit(!isEdit);
   }
@@ -186,11 +167,10 @@ const AppProvider = ({ children }) => {
         days,
         weekInterval,
         setDays,
-        weeks,
-        months,
+
         el,
         dayFormat,
-        day,
+
         openModal,
         isOpen,
         meeting,

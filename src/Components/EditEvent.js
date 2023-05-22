@@ -11,8 +11,7 @@ const EditEvent = ({ input, update, close }) => {
   const {
     meeting,
     setMeeting,
-    isDetailsOpen,
-    setIsDetailsOpen,
+
     saveToLocalStorage,
   } = useGlobalContext();
   function updateEvents(e) {
