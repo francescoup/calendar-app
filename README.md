@@ -17,7 +17,7 @@ This project is part of the challenges in the Frontenders community
 
 ## Try it
 
-Try it here: [React Currency Exchange](https://calendar-app-23.netlify.app/)
+Try it here: [Calendar App](https://calendar-app-23.netlify.app/)
 
 ## License
 
