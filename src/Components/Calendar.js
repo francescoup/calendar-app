@@ -103,7 +103,7 @@ const Calendar = () => {
                   isSameMonth(day, dayCurrentMonths, dayCurrentWeek)
                     ? "text-slate-900"
                     : "bg-slate-100"
-                } auto-rows-auto border-t pt-2 pl-2 flex flex-col items-start justify-start`}
+                } auto-rows-auto border-t pt-2 px-2 flex flex-col items-start justify-start`}
               >
                 <div
                   key={`giorno-${i}`}
@@ -142,7 +142,7 @@ const Calendar = () => {
             ) : (
               <div
                 key={`singleday-${i}`}
-                className="border-t h-96 flex flex-col items-center justify-center gap-4"
+                className="border-t h-96 flex flex-col px-2 items-center justify-center gap-4"
               >
                 <div
                   key={`days-${i}`}
