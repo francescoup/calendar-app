@@ -2,6 +2,7 @@ import React from "react";
 import { dayName } from "../Data/TimeSlot";
 import { AnimatePresence, motion } from "framer-motion";
 import { useSwipeable } from "react-swipeable";
+import { useMobile } from "../CostumHooks/useMobile";
 import {
   format,
   startOfToday,
@@ -38,6 +39,21 @@ const Calendar = () => {
     "col-start-5",
     "col-start-6",
   ];
+  const gridView = () => {
+    switch (el) {
+      case "Giorni":
+        return "grid grid-cols-1 gap-4";
+
+      case "Settimane":
+        return "grid grid-cols-7 max-sm:grid-cols-2 ";
+
+      case "Mesi":
+        return "grid grid-cols-7";
+
+      default:
+        break;
+    }
+  };
 
   function passData(data) {
     setEvent(data);
@@ -45,9 +61,11 @@ const Calendar = () => {
   }
 
   const handlers = useSwipeable({
-    onSwipedRight: () => nextMonths(),
-    onSwipedLeft: () => prevMonths(),
+    onSwipedRight: () => prevMonths(),
+    onSwipedLeft: () => nextMonths(),
   });
+
+  const isMobile = useMobile(639);
   return (
     <div {...handlers} className="container overflow-hidden">
       <AnimatePresence mode="wait" initial={false}>
@@ -56,16 +74,16 @@ const Calendar = () => {
           initial={{ x: "-100vw" }}
           animate={{ x: "0" }}
           exit={{ x: "100vw" }}
-          className={
-            el !== "Giorni" ? "grid grid-cols-7" : "grid grid-cols-1 gap-4"
-          }
+          className={gridView()}
         >
           {el !== "Giorni"
             ? dayName.map((dayName, i) => {
                 return (
                   <div
                     key={`giorni-${i}`}
-                    className="text-left mb-2 pl-2 truncate "
+                    className={`${
+                      el === "Settimane" && "max-sm:hidden "
+                    } text-left mb-2 pl-2 truncate`}
                   >
                     <h3 className="lg:hidden md:hidden">
                       {dayName.substring(0, 1)}
@@ -79,11 +97,13 @@ const Calendar = () => {
             return el !== "Giorni" ? (
               <div
                 key={`settimane${i}`}
-                className={` ${el === "Settimane" ? "h-96" : "h-24"} ${
+                className={` ${
+                  isMobile && el === "Settimane" ? "h-32 border" : "h-28"
+                } ${
                   isSameMonth(day, dayCurrentMonths, dayCurrentWeek)
                     ? "text-slate-900"
                     : "bg-slate-100"
-                } border-t pt-2 pl-2 flex flex-col items-start justify-start`}
+                } auto-rows-auto border-t pt-2 pl-2 flex flex-col items-start justify-start`}
               >
                 <div
                   key={`giorno-${i}`}
@@ -96,7 +116,9 @@ const Calendar = () => {
                flex justify-center items-center rounded-md`}
                   datadetails={format(day, "yyyy-MM-dd")}
                 >
-                  {format(day, "d")}
+                  {isMobile && el === "Settimane"
+                    ? format(day, "d iii")
+                    : format(day, "d")}
                 </div>
                 <div className="flex flex-col items-start w-full gap-1">
                   {meeting &&

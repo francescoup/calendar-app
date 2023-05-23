@@ -29,6 +29,7 @@ const AppProvider = ({ children }) => {
   const [index, setIndex] = useState(0);
   const [isEdit, setIsEdit] = useState(false);
   const [event, setEvent] = useState(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   let dayCurrentMonths = parse(currentMonth, "MMM-yyyy", new Date());
   let dayCurrentWeek = parse(currentWeek, "dd-MMM-yyyy", new Date());
@@ -114,13 +115,13 @@ const AppProvider = ({ children }) => {
   function switchView(key) {
     switch (key) {
       case "Day":
-        return setEl("Giorni");
+        return setEl("Giorni"), setIsMenuOpen(false);
 
       case "Week":
-        return setEl("Settimane");
+        return setEl("Settimane"), setIsMenuOpen(false);
 
       case "Month":
-        return setEl("Mesi");
+        return setEl("Mesi"), setIsMenuOpen(false);
 
       default:
         break;
@@ -132,6 +133,10 @@ const AppProvider = ({ children }) => {
 
   function edit() {
     setIsEdit(!isEdit);
+  }
+
+  function openMenuMobile() {
+    setIsMenuOpen(!isMenuOpen);
   }
 
   //save to local storage
@@ -187,6 +192,8 @@ const AppProvider = ({ children }) => {
         event,
         setEvent,
         switchView,
+        openMenuMobile,
+        isMenuOpen,
       }}
     >
       {children}

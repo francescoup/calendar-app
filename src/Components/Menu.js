@@ -5,6 +5,7 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { useGlobalContext } from "../Context";
 import { calendarswitch } from "../Data/TimeSlot";
 import { motion, AnimatePresence } from "framer-motion";
+import MobileMenu from "../Atoms/MobileMenu";
 
 const Menu = () => {
   const {
@@ -26,16 +27,17 @@ const Menu = () => {
               text={menu.title}
               icon={menu.icon}
               onclick={switchView}
-              className="flex flex-row text-lg hover:bg-slate-200 py-2 px-3 items-center gap-2"
+              className="flex flex-row text-lg hover:bg-slate-200 py-2 px-3 items-center gap-2 max-sm:hidden"
             />
           );
         })}
       </div>
+      <MobileMenu classname="lg:hidden md:hidden text-lg flex items-center mx-2 relative" />
 
-      <button onClick={prevMonths}>
+      <button className="max-sm:hidden" onClick={prevMonths}>
         <IoIosArrowBack />
       </button>
-      <button onClick={nextMonths}>
+      <button className="max-sm:hidden" onClick={nextMonths}>
         <IoIosArrowForward />
       </button>
       <AnimatePresence mode="wait">
@@ -44,7 +46,7 @@ const Menu = () => {
           initial={{ opacity: 0, y: "-10px" }}
           animate={{ opacity: 1, y: "0" }}
           exit={{ opacity: 0, y: "10px" }}
-          className="mx-8 relative mb-1"
+          className="mx-8 relative"
         >
           <h2 className="text-xl text-red-500">{dayFormat}</h2>
         </motion.div>

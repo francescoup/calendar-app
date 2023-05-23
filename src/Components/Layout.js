@@ -19,7 +19,7 @@ const Layout = () => {
       <Calendar />
       <motion.div
         whileHover={{ scale: 1.2 }}
-        className="fixed bottom-16 right-16"
+        className="fixed bottom-16 right-16 max-sm:bottom-8 max-sm:right-8"
       >
         <Button
           className=" shadow-gray-900 rounded-full text-slate-100 text-4xl p-2 shadow-2xl bg-blue-600 "

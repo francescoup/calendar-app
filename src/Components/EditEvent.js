@@ -34,17 +34,22 @@ const EditEvent = ({ input, update, close }) => {
     }
   }
   return (
-    <div>
-      <h2>Modifica evento</h2>
-      <h3>data</h3>
+    <div className="flex flex-col w-full gap-4">
+      <div className="flex items-center justify-between p-4 bg-slate-500">
+        <h2>Modifica evento</h2>
+      </div>
+
+      <h3 className="mx-4">data</h3>
       <input
+        className="h-8 px-4 mx-4 bg-white border-b-2"
         type="date"
         name="time"
         defaultValue={isUpdate.time}
         onChange={updateEvents}
       />
-      <h3>Colore</h3>
+      <h3 className="mx-4">Colore</h3>
       <select
+        className="h-8 px-4 mx-4 bg-white border-b-2"
         name="color"
         defaultValue={isUpdate.color}
         onChange={updateEvents}
@@ -57,18 +62,17 @@ const EditEvent = ({ input, update, close }) => {
           );
         })}
       </select>
-      <h3>Descrizione</h3>
-      <textarea
-        type="textarea"
+      <h3 className="mx-4">Descrizione</h3>
+      <input
+        className="h-8 px-4 mx-4 bg-white border-b-2"
+        type="text"
         name="title"
-        rows={3}
-        cols={3}
         defaultValue={isUpdate.title}
         onChange={updateEvents}
       />
       <button
         onClick={submit}
-        className="w-full rounded-md p-2 bg-slate-50 border border-slate-400"
+        className="p-2 m-4 bg-slate-50 border border-slate-400"
         type="submit"
       >
         Save
