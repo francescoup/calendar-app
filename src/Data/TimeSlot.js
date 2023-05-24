@@ -11,6 +11,9 @@ export const dayName = [
 ];
 export const colors = [
   {
+    value: "categoria",
+  },
+  {
     value: "red",
   },
   {

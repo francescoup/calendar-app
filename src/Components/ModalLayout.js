@@ -25,7 +25,7 @@ const ModalLayout = () => {
           initial={{ opacity: 0, y: "-100px" }}
           animate={{ opacity: 1, y: isMobile ? "0" : "100px" }}
           exit={{ opacity: 0, y: "-100px" }}
-          className="fixed flex flex-col gap-4 z-10 lg:w-80 lg:h-auto w-screen h-screen bg-white border shadow-xl"
+          className="fixed flex flex-col gap-4 z-30 lg:w-80 lg:h-auto w-screen h-screen bg-white border shadow-xl"
         >
           {isEdit ? (
             <EditEvent input={event} update={edit} close={setIsEdit} />

@@ -4,17 +4,18 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 import { useGlobalContext } from "../Context";
 import { calendarswitch } from "../Data/TimeSlot";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, delay } from "framer-motion";
 import MobileMenu from "../Atoms/MobileMenu";
 
 const Menu = () => {
   const {
     nextMonths,
     prevMonths,
-
+    index,
     dayFormat,
 
     switchView,
+    paginate,
   } = useGlobalContext();
 
   return (
@@ -40,15 +41,26 @@ const Menu = () => {
       <button className="max-sm:hidden" onClick={nextMonths}>
         <IoIosArrowForward />
       </button>
-      <AnimatePresence mode="wait">
+      <AnimatePresence mode="popLayout" initial="false">
         <motion.div
-          key={dayFormat}
-          initial={{ opacity: 0, y: "-10px" }}
-          animate={{ opacity: 1, y: "0" }}
-          exit={{ opacity: 0, y: "10px" }}
-          className="mx-8 relative"
+          key={index}
+          initial={{
+            zIndex: 0,
+            opacity: 0,
+            y: "10px",
+          }}
+          animate={{
+            zIndex: 1,
+            opacity: 1,
+            y: "0",
+          }}
+          exit={{ zIndex: 0, opacity: 0, y: "-10px" }}
+          transition={{
+            y: { type: "spring" },
+          }}
+          className="mx-8 h-8  w-auto overflow-hidden"
         >
-          <h2 className="text-xl text-red-500">{dayFormat}</h2>
+          <h2 className="text-xl  text-red-500">{dayFormat}</h2>
         </motion.div>
       </AnimatePresence>
     </nav>

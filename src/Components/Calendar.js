@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { dayName } from "../Data/TimeSlot";
 import { AnimatePresence, motion } from "framer-motion";
 import { useSwipeable } from "react-swipeable";
@@ -14,6 +14,24 @@ import {
 } from "date-fns";
 
 import { useGlobalContext } from "../Context";
+const maxWidht = "100vh";
+const variants = {
+  enter: (direction) => ({
+    zIndex: 0,
+    x: direction < 0 ? 1400 : -1400,
+    opacity: 0,
+  }),
+  center: {
+    zIndex: 1,
+    x: 0,
+    opacity: 1,
+  },
+  exit: (direction) => ({
+    zIndex: 0,
+    x: direction < 0 ? 1400 : -1400,
+    opacity: 0,
+  }),
+};
 
 const Calendar = () => {
   const {
@@ -28,6 +46,8 @@ const Calendar = () => {
     setEvent,
     nextMonths,
     prevMonths,
+    page,
+    direction,
   } = useGlobalContext();
 
   let colstart = [
@@ -42,13 +62,13 @@ const Calendar = () => {
   const gridView = () => {
     switch (el) {
       case "Giorni":
-        return "grid grid-cols-1 gap-4";
+        return "grid grid-cols-1 gap-4 relative";
 
       case "Settimane":
-        return "grid grid-cols-7 max-sm:grid-cols-2 ";
+        return "grid grid-cols-7 max-sm:grid-cols-2 relative ";
 
       case "Mesi":
-        return "grid grid-cols-7";
+        return "grid grid-cols-7 relative";
 
       default:
         break;
@@ -59,22 +79,36 @@ const Calendar = () => {
     setEvent(data);
     setIsDetailsOpen(!isDetailsOpen);
   }
-
+  // const [[page, direction], setPage] = useState([0,0])
+  // const paginate = (newDirection) => {
+  //   setPage([page + newDirection, newDirection])
+  // }
   const handlers = useSwipeable({
     onSwipedRight: () => prevMonths(),
     onSwipedLeft: () => nextMonths(),
   });
 
   const isMobile = useMobile(639);
+  console.log(direction);
   return (
-    <div {...handlers} className="container overflow-hidden">
-      <AnimatePresence mode="wait" initial={false}>
+    <div {...handlers} className="container overflow-hidden relative">
+      <AnimatePresence custom={direction} mode="popLayout" initial={false}>
         <motion.div
-          key={`calendar-${index}`}
-          initial={{ x: "-100vw" }}
-          animate={{ x: "0" }}
-          exit={{ x: "100vw" }}
+          // key={`calendar-${index}`}
+          // initial={{ x: "-100vw" }}
+          // animate={{ x: "0" }}
+          // exit={{ x: "100vw" }}
+          key={page}
+          custom={direction}
+          variants={variants}
+          initial="enter"
+          animate="center"
+          exit="exit"
           className={gridView()}
+          transition={{
+            x: { type: "spring", stiffness: 120 },
+            opacity: { duration: 0.2 },
+          }}
         >
           {el !== "Giorni"
             ? dayName.map((dayName, i) => {
@@ -120,7 +154,7 @@ const Calendar = () => {
                     ? format(day, "d iii")
                     : format(day, "d")}
                 </div>
-                <div className="flex flex-col items-start w-full gap-1">
+                <div className="flex flex-col items-start w-full gap-1 overflow-auto">
                   {meeting &&
                     meeting
                       .filter((singleMeeting) =>
@@ -129,7 +163,7 @@ const Calendar = () => {
                       .map((events, i) => {
                         return (
                           <div
-                            className={`${events.color} w-full text-sm shadow-lg px-2 flex items-center justify-start`}
+                            className={`${events.color} w-full text-sm shadow-lg px-2 flex items-center justify-start truncate`}
                           >
                             <button key={i} onClick={() => passData(events)}>
                               {events.title}
@@ -150,9 +184,7 @@ const Calendar = () => {
                     isSameMonth(day, dayCurrentMonths, dayCurrentWeek)
                       ? "text-slate-900"
                       : "text-slate-200"
-                  } ${
-                    isSunday(day) && "bg-red-200"
-                  } flex justify-center items-center rounded-md`}
+                  }  flex justify-center items-center rounded-md`}
                   datadetails={format(day, "dd-MM-yyyy")}
                 >
                   {format(day, "EEEE d MMM")}
@@ -166,7 +198,7 @@ const Calendar = () => {
                       .map((events, i) => {
                         return (
                           <div
-                            className={`${events.color} w-full text-sm shadow-lg px-2 flex items-center justify-start`}
+                            className={`${events.color} w-full text-sm shadow-lg px-2 flex items-center justify-start overflow-auto`}
                           >
                             <button key={i} onClick={() => passData(events)}>
                               {events.title}

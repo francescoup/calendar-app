@@ -30,6 +30,7 @@ const AppProvider = ({ children }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [event, setEvent] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [[page, direction], setPage] = useState([0, 0]);
 
   let dayCurrentMonths = parse(currentMonth, "MMM-yyyy", new Date());
   let dayCurrentWeek = parse(currentWeek, "dd-MMM-yyyy", new Date());
@@ -70,6 +71,7 @@ const AppProvider = ({ children }) => {
       setCurrentWeek(format(dayNext, "dd-MMM-yyyy"));
     }
     setIndex((prev) => prev + 1);
+    paginate(1);
   }, [el, currentMonth, currentWeek, currentDay]);
 
   const prevMonths = useCallback(() => {
@@ -91,6 +93,7 @@ const AppProvider = ({ children }) => {
       setCurrentMonth(format(dayNext, "MMM-yyyy"));
     }
     setIndex((prev) => prev - 1);
+    paginate(-1);
   }, [el, currentMonth, currentWeek, currentDay]);
 
   useEffect(() => {
@@ -106,7 +109,7 @@ const AppProvider = ({ children }) => {
     if (el === "Settimane") {
       setDayFormat(format(dayCurrentWeek, "dd MMM yyyy"));
     } else if (el === "Mesi") {
-      setDayFormat(format(dayCurrentMonths, "MMM yyyy"));
+      setDayFormat(format(dayCurrentMonths, "MMMM yyyy"));
     } else if (el === "Giorni") {
       setDayFormat(format(dayCurrent, "dd MMM yyyy"));
     }
@@ -161,6 +164,10 @@ const AppProvider = ({ children }) => {
     setIsDetailsOpen(false);
   };
 
+  const paginate = (newDirection) => {
+    setPage([page + newDirection, newDirection]);
+  };
+  console.log(page);
   return (
     <AppContext.Provider
       value={{
@@ -194,6 +201,10 @@ const AppProvider = ({ children }) => {
         switchView,
         openMenuMobile,
         isMenuOpen,
+        page,
+        direction,
+        setPage,
+        paginate,
       }}
     >
       {children}

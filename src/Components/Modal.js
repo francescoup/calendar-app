@@ -44,7 +44,7 @@ const Modal = () => {
           initial={{ opacity: 0, y: "-100px" }}
           animate={{ opacity: 1, y: isMobile ? "0" : "100px" }}
           exit={{ opacity: 0, y: "-100px" }}
-          className="fixed flex flex-col gap-4 -translate-y-1/2 lg:w-80 md:w-80 md:h-auto lg:h-auto w-screen h-screen bg-white shadow-2xl z-10 border  -translate-x-1/2 opacity-1"
+          className="fixed flex flex-col gap-4 -translate-y-1/2 lg:w-80 md:w-80 md:h-auto lg:h-auto w-screen h-screen bg-white shadow-2xl z-30 border  -translate-x-1/2 opacity-1"
         >
           <div className="flex items-center justify-between p-4 bg-slate-500">
             <h2>Nuovo evento</h2>
