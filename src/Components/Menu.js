@@ -6,6 +6,7 @@ import { useGlobalContext } from "../Context";
 import { calendarswitch } from "../Data/TimeSlot";
 import { motion, AnimatePresence, delay } from "framer-motion";
 import MobileMenu from "../Atoms/MobileMenu";
+import { useMobile } from "../CostumHooks/useMobile";
 
 const Menu = () => {
   const {
@@ -17,7 +18,7 @@ const Menu = () => {
     switchView,
     paginate,
   } = useGlobalContext();
-
+  const isMobile = useMobile(639);
   return (
     <nav className="container flex  items-center pt-4 pb-4 ">
       <div className="text-slate-600 flex gap-4">
@@ -41,7 +42,7 @@ const Menu = () => {
       <button className="max-sm:hidden" onClick={nextMonths}>
         <IoIosArrowForward />
       </button>
-      <AnimatePresence mode="popLayout" initial="false">
+      <AnimatePresence mode={isMobile ? "wait" : "popLayout"} initial="false">
         <motion.div
           key={index}
           initial={{
